@@ -107,6 +107,12 @@
                 settings:allowDividerAbove="true"
                 settings:allowDividerBelow="true"/>
 
+        <!-- jancokOS version -->
+        <Preference android:key="jancok_version"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/jancok_version"
+                android:summary="@string/jancok_version_default" />
+         
         <!-- Device Baseband version -->
         <com.android.settings.DividerPreference
                 android:key="baseband_version"
