@@ -57,6 +57,7 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
     private static final int KEY_MASK_CAMERA = 0x20;
 
     private static final String KEY_NAVIGATION_BAR         = "navigation_bar";
+    private static final String KEY_ANBI                   = "anbi";
     private static final String KEY_HOME_LONG_PRESS        = "home_key_long_press";
     private static final String KEY_HOME_DOUBLE_TAP        = "home_key_double_tap";
     private static final String KEY_BACK_LONG_PRESS        = "back_key_long_press";
@@ -99,6 +100,7 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
     private ListPreference mCameraDoubleTapAction;
 
     private SwitchPreference mNavigationBar;
+    private SwitchPreference mAnbiPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,16 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
             } else {
                 mNavigationBar = null;
                 removePreference(KEY_NAVIGATION_BAR);
+            }
+        }
+
+        /* Accidental navigation button interaction */
+        mAnbiPreference = (SwitchPreference) findPreference(KEY_ANBI);
+        if (mAnbiPreference != null) {
+            if (mDeviceHardwareKeys != 0) {
+                mAnbiPreference.setOnPreferenceChangeListener(this);
+            } else {
+                prefScreen.removePreference(mAnbiPreference);
             }
         }
 
@@ -304,6 +316,8 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
             return EMPTY_STRING;
         } else if (preference == mNavigationBar) {
             return Settings.System.NAVIGATION_BAR_ENABLED;
+        } else if (preference == mAnbiPreference) {
+            return Settings.System.ANBI_ENABLED;
         } else if (preference == mHomeLongPressAction) {
             return Settings.System.KEY_HOME_LONG_PRESS_ACTION;
         } else if (preference == mHomeDoubleTapAction) {
@@ -347,8 +361,15 @@ public class ButtonsSettings extends SettingsPreferenceFragment implements
         final boolean hasAssist = (mDeviceHardwareKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasCamera = (mDeviceHardwareKeys & KEY_MASK_CAMERA) != 0;
 
+        final boolean anbiEnabled = Settings.System.getIntForUser(resolver,
+                Settings.System.ANBI_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
+
         if (mNavigationBar != null) {
             mNavigationBar.setChecked(navigationBarEnabled);
+        }
+
+        if (mAnbiPreference != null) {
+            mAnbiPreference.setChecked(anbiEnabled);
         }
 
         final PreferenceScreen prefScreen = getPreferenceScreen();
