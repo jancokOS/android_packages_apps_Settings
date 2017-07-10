@@ -27,6 +27,7 @@ import com.android.settings.PrivacySettings;
 import com.android.settings.R;
 import com.android.settings.ScreenPinningSettings;
 import com.android.settings.SecuritySettings;
+import com.android.settings.Traffic;
 import com.android.settings.WallpaperTypeSettings;
 import com.android.settings.WirelessSettings;
 import com.android.settings.accessibility.AccessibilitySettings;
@@ -334,6 +335,14 @@ public final class SearchIndexableResources {
                         R.xml.buttons_settings,
                         ButtonsSettings.class.getName(),
                         R.drawable.ic_settings_buttons));
+
+        sResMap.put(Traffic.class.getName(),
+                new SearchIndexableResource(
+                        Ranking.getRankForClassName(Traffic.class.getName()),
+                        R.xml.traffic,
+                        Traffic.class.getName(),
+                        R.drawable.ic_traffic));
+
     }
 
     private SearchIndexableResources() {

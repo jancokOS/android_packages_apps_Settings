@@ -26,6 +26,7 @@ import com.android.settings.LegalSettings;
 import com.android.settings.PrivacySettings;
 import com.android.settings.ScreenPinningSettings;
 import com.android.settings.SecuritySettings;
+import com.android.settings.Traffic;
 import com.android.settings.WallpaperTypeSettings;
 import com.android.settings.WirelessSettings;
 import com.android.settings.accessibility.AccessibilitySettings;
@@ -89,6 +90,8 @@ public final class Ranking {
     public static final int RANK_DEVICE_INFO = 23;
     public static final int RANK_GESTURE = 24;
     public static final int RANK_BUTTONS = 25;
+    public static final int RANK_TRAFFIC = 26;
+
 
     public static final int RANK_UNDEFINED = -1;
     public static final int RANK_OTHERS = 1024;
@@ -189,6 +192,9 @@ public final class Ranking {
 
         // Buttons
         sRankMap.put(ButtonsSettings.class.getName(), RANK_BUTTONS);
+
+        // Traffic
+        sRankMap.put(Traffic.class.getName(), RANK_TRAFFIC);
 
         sBaseRankMap.put("com.android.settings", 0);
     }
