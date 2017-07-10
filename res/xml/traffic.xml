@@ -53,13 +53,13 @@
         android:dependency="network_traffic_state"
         android:defaultValue="false" />
 
-    <CustomSeekBarPreference
+    <!--SeekBarPreference
         android:key="network_traffic_autohide_threshold"
         android:title="@string/network_traffic_autohide_threshold"
         android:max="100"
         settings:min="0"
         settings:units="kB/s"
         android:dependency="network_traffic_autohide"
-        android:persistent="false" />
+        android:persistent="false" /-->
 
 </PreferenceScreen>
