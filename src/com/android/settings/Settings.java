@@ -162,4 +162,5 @@ public class Settings extends SettingsActivity {
 
     // jancokOS additions
     public static class ButtonsSettingsActivity extends SettingsActivity { /* empty */ }
+    public static class TrafficActivity extends SettingsActivity { /* empty */ }
 }
