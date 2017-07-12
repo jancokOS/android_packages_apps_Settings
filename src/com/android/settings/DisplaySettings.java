@@ -66,6 +66,7 @@ import static android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE;
 import static android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
 import static android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
+import static android.provider.Settings.System.GESTURE_DOUBLE_TAP_SLEEP;
 
 import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 
@@ -89,6 +90,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_CAMERA_GESTURE = "camera_gesture";
     private static final String KEY_WALLPAPER = "wallpaper";
     private static final String KEY_VR_DISPLAY_PREF = "vr_display_pref";
+    private static final String KEY_DOUBLE_TAP_SLEEP = "gesture_double_tap_sleep";
 
     private Preference mFontSizePref;
 
@@ -98,6 +100,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private SwitchPreference mLiftToWakePreference;
     private SwitchPreference mDozePreference;
     private SwitchPreference mTapToWakePreference;
+    private SwitchPreference mTapToSleepPreference;
     private SwitchPreference mAutoBrightnessPreference;
     private SwitchPreference mCameraGesturePreference;
 
@@ -156,6 +159,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else {
             removePreference(KEY_TAP_TO_WAKE);
         }
+
+        mTapToSleepPreference = (SwitchPreference) findPreference(KEY_DOUBLE_TAP_SLEEP);
+        mTapToSleepPreference.setOnPreferenceChangeListener(this);
 
         if (isCameraGestureAvailable(getResources())) {
             mCameraGesturePreference = (SwitchPreference) findPreference(KEY_CAMERA_GESTURE);
@@ -360,6 +366,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mTapToWakePreference.setChecked(value != 0);
         }
 
+        // Update tap to sleep if it is available.
+        if (mTapToSleepPreference != null) {
+            int value = Settings.System.getInt(getContentResolver(), GESTURE_DOUBLE_TAP_SLEEP, 0);
+            mTapToSleepPreference.setChecked(value != 0);
+        }
+
         // Update doze if it is available.
         if (mDozePreference != null) {
             int value = Settings.Secure.getInt(getContentResolver(), DOZE_ENABLED, 1);
@@ -420,6 +432,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (preference == mTapToWakePreference) {
             boolean value = (Boolean) objValue;
             Settings.Secure.putInt(getContentResolver(), DOUBLE_TAP_TO_WAKE, value ? 1 : 0);
+        }
+        if (preference == mTapToSleepPreference) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(getContentResolver(), GESTURE_DOUBLE_TAP_SLEEP, value ? 1 : 0);
         }
         if (preference == mCameraGesturePreference) {
             boolean value = (Boolean) objValue;
