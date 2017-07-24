@@ -63,4 +63,10 @@
     <!-- Statusbar - double-tap to sleep -->
     <string name="double_tap_to_sleep_title">Tap to sleep</string>
     <string name="double_tap_to_sleep_summary">Double-tap on the status bar and lock screen to put the device to sleep</string>
+
+    <string name="status_bar_am_pm_title">AM/PM</string>
+    <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
+    <string name="clock_am_pm_date_normal">Normal</string>
+    <string name="clock_am_pm_date_small">Small</string>
+    <string name="clock_am_pm_date_none">Hidden</string>
 </resources>

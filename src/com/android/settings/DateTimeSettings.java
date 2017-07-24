@@ -32,6 +32,7 @@ import android.os.UserManager;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.support.v7.preference.ListPreference;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
@@ -75,12 +76,15 @@ public class DateTimeSettings extends SettingsPreferenceFragment
     // Minimum time is Nov 5, 2007, 0:00.
     private static final long MIN_DATE = 1194220800000L;
 
+    private static final String PREF_AM_PM_STYLE = "status_bar_am_pm";
+
     private RestrictedSwitchPreference mAutoTimePref;
     private Preference mTimePref;
     private Preference mTime24Pref;
     private SwitchPreference mAutoTimeZonePref;
     private Preference mTimeZone;
     private Preference mDatePref;
+    private ListPreference mClockAmPmStyle;
 
     @Override
     protected int getMetricsCategory() {
@@ -134,6 +138,11 @@ public class DateTimeSettings extends SettingsPreferenceFragment
         mTimePref.setEnabled(!autoTimeEnabled);
         mDatePref.setEnabled(!autoTimeEnabled);
         mTimeZone.setEnabled(!autoTimeZoneEnabled);
+
+        mClockAmPmStyle = (ListPreference) findPreference(PREF_AM_PM_STYLE);
+        mClockAmPmStyle.setOnPreferenceChangeListener(this);
+        mClockAmPmStyle.setValue(Integer.toString(Settings.System.getInt(getContentResolver(),
+              Settings.System.STATUS_BAR_AM_PM, 1)));
     }
 
     @Override
@@ -206,6 +215,11 @@ public class DateTimeSettings extends SettingsPreferenceFragment
             Settings.Global.putInt(
                     getContentResolver(), Settings.Global.AUTO_TIME_ZONE, autoZoneEnabled ? 1 : 0);
             mTimeZone.setEnabled(!autoZoneEnabled);
+        } else if (preference.getKey().equals(PREF_AM_PM_STYLE)) {
+            int val = Integer.parseInt((String) newValue);
+            int index = mClockAmPmStyle.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_AM_PM, val);
+            mClockAmPmStyle.setSummary(mClockAmPmStyle.getEntries()[index]);
         }
         return true;
     }
