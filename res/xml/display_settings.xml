@@ -112,6 +112,11 @@
                 android:title="@string/pocket_judge_title"
                 android:summary="@string/pocket_judge_summary" />
 
+        <SwitchPreference
+                android:key="gesture_three_finger_screenshot"
+                android:title="@string/three_finger_screenshot_title"
+                android:summary="@string/three_finger_screenshot_summary" />
+
         <PreferenceScreen
                 android:key="font_size"
                 android:title="@string/title_font_size"
