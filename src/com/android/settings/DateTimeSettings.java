@@ -64,9 +64,6 @@ public class DateTimeSettings extends SettingsPreferenceFragment
     // The date value is dummy (independent of actual date).
     private Calendar mDummyDate;
 
-    private static final String KEY_AUTO_TIME = "auto_time";
-    private static final String KEY_AUTO_TIME_ZONE = "auto_zone";
-
     private static final int DIALOG_DATEPICKER = 0;
     private static final int DIALOG_TIMEPICKER = 1;
 
@@ -76,7 +73,18 @@ public class DateTimeSettings extends SettingsPreferenceFragment
     // Minimum time is Nov 5, 2007, 0:00.
     private static final long MIN_DATE = 1194220800000L;
 
+    private static final String KEY_AUTO_TIME = "auto_time";
+    private static final String KEY_AUTO_TIME_ZONE = "auto_zone";
     private static final String PREF_AM_PM_STYLE = "status_bar_am_pm";
+    private static final String KEY_CLOCK_STYLE = "clock_style";
+
+    private static final int CLOCK_STYLE_RIGHT_CLOCK        = 0;
+    private static final int CLOCK_STYLE_CENTER_CLOCK       = 1;
+    private static final int CLOCK_STYLE_LEFT_CLOCK         = 2;
+
+    private static final int CLOCK_AM_PM_STYLE_NORMAL       = 0;
+    private static final int CLOCK_AM_PM_STYLE_SMALL        = 1;
+    private static final int CLOCK_AM_PM_STYLE_GONE         = 2;
 
     private RestrictedSwitchPreference mAutoTimePref;
     private Preference mTimePref;
@@ -85,6 +93,7 @@ public class DateTimeSettings extends SettingsPreferenceFragment
     private Preference mTimeZone;
     private Preference mDatePref;
     private ListPreference mClockAmPmStyle;
+    private ListPreference mClockStyle;
 
     @Override
     protected int getMetricsCategory() {
@@ -141,8 +150,18 @@ public class DateTimeSettings extends SettingsPreferenceFragment
 
         mClockAmPmStyle = (ListPreference) findPreference(PREF_AM_PM_STYLE);
         mClockAmPmStyle.setOnPreferenceChangeListener(this);
-        mClockAmPmStyle.setValue(Integer.toString(Settings.System.getInt(getContentResolver(),
-              Settings.System.STATUS_BAR_AM_PM, 1)));
+        mClockAmPmStyle.setValue(Integer.toString(Settings.System.getInt(getActivity()
+                .getContentResolver(), Settings.System.STATUS_BAR_AM_PM,
+                CLOCK_AM_PM_STYLE_GONE)));
+        mClockAmPmStyle.setSummary(mClockAmPmStyle.getEntry());
+        mClockAmPmStyle.setEnabled(!is24Hour());
+
+        mClockStyle = (ListPreference) findPreference(KEY_CLOCK_STYLE);
+        mClockStyle.setOnPreferenceChangeListener(this);
+        mClockStyle.setValue(Integer.toString(Settings.System.getInt(getActivity()
+                .getContentResolver(), Settings.System.CLOCK_STYLE,
+                CLOCK_STYLE_RIGHT_CLOCK)));
+        mClockStyle.setSummary(mClockStyle.getEntry());
     }
 
     @Override
@@ -224,8 +243,13 @@ public class DateTimeSettings extends SettingsPreferenceFragment
         } else if (preference.getKey().equals(PREF_AM_PM_STYLE)) {
             int val = Integer.parseInt((String) newValue);
             int index = mClockAmPmStyle.findIndexOfValue((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_AM_PM, val);
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_AM_PM, val);
             mClockAmPmStyle.setSummary(mClockAmPmStyle.getEntries()[index]);
+        } else if (preference == mClockStyle) {
+            int val = Integer.parseInt((String) newValue);
+            int index = mClockStyle.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.CLOCK_STYLE, val);
+            mClockStyle.setSummary(mClockStyle.getEntries()[index]);
         }
         return true;
     }
@@ -305,6 +329,7 @@ public class DateTimeSettings extends SettingsPreferenceFragment
             set24Hour(is24Hour);
             updateTimeAndDateDisplay(getActivity());
             timeUpdated(is24Hour);
+            mClockAmPmStyle.setEnabled(!is24Hour());
         }
         return super.onPreferenceTreeClick(preference);
     }

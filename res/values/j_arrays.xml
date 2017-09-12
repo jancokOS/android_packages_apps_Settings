@@ -86,6 +86,7 @@
         <item>2000</item>
     </string-array>
 
+    <!-- Clock Settings -->
     <string-array name="entries_status_bar_am_pm" translatable="false">
         <item>@string/clock_am_pm_date_normal</item>
         <item>@string/clock_am_pm_date_small</item>
@@ -93,6 +94,18 @@
     </string-array>
 
     <string-array name="values_status_bar_am_pm" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="clock_style_entries">
+        <item>@string/clock_style_right_clock</item>
+        <item>@string/clock_style_center_clock</item>
+        <item>@string/clock_style_left_clock</item>
+    </string-array>
+
+    <string-array name="clock_style_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>

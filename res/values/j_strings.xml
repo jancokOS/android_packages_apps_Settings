@@ -64,6 +64,15 @@
     <string name="double_tap_to_sleep_title">Tap to sleep</string>
     <string name="double_tap_to_sleep_summary">Double-tap on the status bar and lock screen to put the device to sleep</string>
 
+    <!-- Clock Settings -->
+    <string name="time_group_title">Time configuration</string>
+    <string name="clock_group_title">Clock appearance</string>
+    <string name="clock_show_title">Show clock in statusbar</string>
+    <string name="clock_seconds_title">Show seconds</string>
+    <string name="clock_style_title">Alignment</string>
+    <string name="clock_style_right_clock">Right clock</string>
+    <string name="clock_style_center_clock">Center clock</string>
+    <string name="clock_style_left_clock">Left clock</string>
     <string name="status_bar_am_pm_title">AM/PM</string>
     <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
     <string name="clock_am_pm_date_normal">Normal</string>
