@@ -161,4 +161,8 @@
     <string name="app_ops_settings">Permission manager</string>
     <!-- [CHAR LIMIT=NONE] App ops settings summary, on main settings screen. If clicked, the user is taken to a settings screen for app operations -->
     <string name="app_ops_settings_summary">View or change app permissions</string>
+
+    <!-- Fingerprint vibrate -->
+    <string name="fprint_sucess_vib_title">Fingerprint vibration</string>
+    <string name="fprint_sucess_vib_summary">Vibrate on successful fingerprint authentication</string>
 </resources>

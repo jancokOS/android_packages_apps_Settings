@@ -30,6 +30,13 @@
         android:summary="@string/anbi_summary"
         android:persistent="false" />
 
+    <!-- Fingerprint vibration -->
+    <com.android.settings.preference.SystemSettingSwitchPreference
+        android:key="fingerprint_success_vib"
+        android:title="@string/fprint_sucess_vib_title"
+        android:summary="@string/fprint_sucess_vib_summary"
+        android:defaultValue="true" />
+
     <PreferenceCategory
         android:key="home_key"
         android:title="@string/home_key_title" >
